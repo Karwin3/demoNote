@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 目标对象
+    const user = {
+      name:'jk',
+      age:20
+    }
+    // Proxy
+    // 参数 1: target 目标对象
+    // 参数 2: handler 处理器对象，用来监视和操作数据
+    const userProxy = new Proxy (user,{
+      // 获取
+      get(target,prop){
+        console.log('get方法执行');
+        return Reflect.get(target,prop)
+      },
+      // 修改，添加
+      set(target,prop,value){
+        console.log('set方法执行');
+        return Reflect.set(target,prop,value)
+      },
+      // 删除
+      deleteProperty(target,prop){
+        console.log('delete方法执行');
+        return Reflect.deleteProperty(target,prop)
+      }
+    })
+
+    // 通过代理对象获取目标对象中的某个属性值
+    console.log(userProxy.name);
+
+    userProxy.name = 'jk1'
+    console.log(userProxy);
+
+    delete userProxy.name
+    console.log(userProxy);
+  </script>
+</body>
+</html>
